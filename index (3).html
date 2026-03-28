@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script>
+
+function getParams() {
+
+    let search = location.search.substring(1);
+
+    let parts = search.split("&");
+
+    let data = {};
+
+    for (let i = 0; i < parts.length; i++) {
+
+        let pair = parts[i].split("=");
+
+        data[pair[0]] = pair[1];
+    }
+
+    return data;
+}
+
+
+function parseNumbers(str) {
+
+    let arr = str.split(",");
+
+    let nums = [];
+
+    for (let i = 0; i < arr.length; i++) {
+
+        nums.push(parseInt(arr[i]));
+    }
+
+    return nums;
+}
+
+
+function pearson(A, B) {
+
+    let n = A.length;
+
+    let sumX = 0;
+    let sumY = 0;
+    let sumXY = 0;
+    let sumX2 = 0;
+    let sumY2 = 0;
+
+    for (let i = 0; i < n; i++) {
+
+        sumX += A[i];
+        sumY += B[i];
+
+        sumXY += A[i] * B[i];
+
+        sumX2 += A[i] * A[i];
+        sumY2 += B[i] * B[i];
+    }
+
+    let numerator =
+        n * sumXY - sumX * sumY;
+
+    let denominator =
+        Math.sqrt(
+            (n * sumX2 - sumX * sumX) *
+            (n * sumY2 - sumY * sumY)
+        );
+
+    let r = numerator / denominator;
+
+    return r;
+}
+
+
+window.onload = function () {
+
+    let params = getParams();
+
+    let A = parseNumbers(params["A"]);
+    let B = parseNumbers(params["B"]);
+
+    let r = pearson(A, B);
+
+    let result = Math.round(r * 1000) / 1000;
+
+    document.title = "ayham " + result;
+
+};
+
+</script>
+
+</head>
+
+<body>
+</body>
+
+</html>
